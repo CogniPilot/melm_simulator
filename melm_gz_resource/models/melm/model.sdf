@@ -61,8 +61,8 @@
       </visual>
     </link>
     <link name="base_footprint"/>
-    <link name="rplidar_link">
-      <pose relative_to="base_link">0 0 0.12 0 0 0</pose>
+    <link name="lidar_link">
+      <pose relative_to="base_link">0 0 0.1 0 0 0</pose>
       <inertial>
         <mass>0.17</mass>
         <inertia>
@@ -77,11 +77,11 @@
       <visual name="visual">
         <geometry>
           <mesh>
-            <uri>model://melm/meshes/rplidar.dae</uri>
+            <uri>model://melm/meshes/STL27L.dae</uri>
           </mesh>
         </geometry>
       </visual>
-      <sensor name="rplidar" type="gpu_lidar">
+      <sensor name="lidar" type="gpu_lidar">
         <lidar>
           <scan>
             <horizontal>
@@ -93,19 +93,19 @@
           </scan>
           <range>
             <min>0.15</min>
-            <max>12</max>
+            <max>25</max>
             <resolution>0.01</resolution>
           </range>
         </lidar>
-        <gz_frame_id>rplidar_link</gz_frame_id>
+        <gz_frame_id>lidar_link</gz_frame_id>
         <alwaysOn>1</alwaysOn>
         <visualize>true</visualize>
         <update_rate>10</update_rate>
       </sensor>
     </link>
-    <joint name="rplidar_joint" type="fixed">
+    <joint name="lidar_joint" type="fixed">
       <parent>base_link</parent>
-      <child>rplidar_link</child>
+      <child>lidar_link</child>
     </joint>
     <link name="sensors">
       <pose relative_to="base_link">0 0 0.12 0 0 0</pose>
@@ -435,25 +435,33 @@
         filename="gz-sim-joint-controller-system"
         name="gz::sim::systems::JointController">
       <joint_name>BackRightHubMotorWheelJoint</joint_name>
-      <sub_topic>rear_right</sub_topic>
+      <!-- <sub_topic>rear_right</sub_topic> -->
+      <use_actuator_msg>true</use_actuator_msg>
+      <actuator_number>0</actuator_number>
     </plugin>
     <plugin
         filename="gz-sim-joint-controller-system"
         name="gz::sim::systems::JointController">
       <joint_name>BackLeftHubMotorWheelJoint</joint_name>
-      <sub_topic>rear_left</sub_topic>
+      <!-- <sub_topic>rear_left</sub_topic> -->
+      <use_actuator_msg>true</use_actuator_msg>
+      <actuator_number>1</actuator_number>
     </plugin>
     <plugin
         filename="gz-sim-joint-controller-system"
         name="gz::sim::systems::JointController">
       <joint_name>FrontLeftHubMotorWheelJoint</joint_name>
-      <sub_topic>front_left</sub_topic>
+      <!-- <sub_topic>front_left</sub_topic> -->
+      <use_actuator_msg>true</use_actuator_msg>
+      <actuator_number>2</actuator_number>
     </plugin>
     <plugin
         filename="gz-sim-joint-controller-system"
         name="gz::sim::systems::JointController">
       <joint_name>FrontRightHubMotorWheelJoint</joint_name>
-      <sub_topic>front_right</sub_topic>
+      <!-- <sub_topic>front_right</sub_topic> -->
+      <use_actuator_msg>true</use_actuator_msg>
+      <actuator_number>3</actuator_number>
     </plugin>
     <plugin
       filename="gz-sim-odometry-publisher-system"
