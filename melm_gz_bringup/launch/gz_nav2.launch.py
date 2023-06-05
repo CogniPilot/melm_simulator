@@ -159,7 +159,7 @@ def generate_launch_description():
             '/model/melm/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry'
             ],
         remappings=[
-            ('/model/melm/odometry', '/cerebri/in/odometry')
+            ('/model/melm/odometry', '/odom')
             ])
 
     odom_base_tf_bridge = Node(
@@ -257,6 +257,18 @@ def generate_launch_description():
             ('map', PathJoinSubstitution([get_package_share_directory(
                 'melm_nav2'), 'maps', LaunchConfiguration('map_yaml')]))])
 
+    tf_to_odom = Node(
+        package='corti',
+        executable='tf_to_odom',
+        output='screen',
+        parameters=[{
+            'base_frame': 'map',
+            'target_frame': 'base_link',
+            }],
+        remappings=[
+            ('/odom', '/cerebri/in/odometry')
+            ])
+
     # Define LaunchDescription variable
     return LaunchDescription(ARGUMENTS + [
         robot_description,
@@ -279,5 +291,6 @@ def generate_launch_description():
         nav2,
         corti,
         slam,
-        localization
+        localization,
+        tf_to_odom
     ])
