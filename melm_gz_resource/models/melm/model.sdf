@@ -63,7 +63,7 @@
     <link name="base_footprint"/>
     <link name="lidar_link">
       <pose relative_to="base_link">0 0 0.108 0 0 0</pose>
-            <inertial>
+      <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.17</mass>
         <inertia>
@@ -111,15 +111,15 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.03</min>
-            <max>5</max>
+            <min>0.15</min>
+            <max>10</max>
             <resolution>0.01</resolution>
           </range>
         </lidar>
         <gz_frame_id>lidar_link</gz_frame_id>
         <alwaysOn>1</alwaysOn>
         <visualize>false</visualize>
-        <update_rate>2</update_rate>
+        <update_rate>10</update_rate>
       </sensor>
     </link>
     <joint name="lidar_joint" type="fixed">
@@ -223,7 +223,7 @@
       <child>FrontLeftHubMotorWheel</child>
       <pose relative_to="base_link">.14 .204 -0.04275 0 0 3.14159265359</pose>
       <axis>
-        <xyz>0 1 0</xyz>
+        <xyz>0 -1 0</xyz>
         <limit>
           <lower>-1e+16</lower>
           <upper>1e+16</upper>
@@ -430,11 +430,10 @@
         <child>sensors</child>
         <pose>0.0 0.0 0.0 0 0 0</pose>
     </joint>
-    <plugin
+<!--     <plugin
         filename="gz-sim-joint-controller-system"
         name="gz::sim::systems::JointController">
       <joint_name>FrontLeftHubMotorWheelJoint</joint_name>
-      <!-- <sub_topic>front_left</sub_topic> -->
       <use_actuator_msg>true</use_actuator_msg>
       <actuator_number>0</actuator_number>
     </plugin>
@@ -442,9 +441,30 @@
         filename="gz-sim-joint-controller-system"
         name="gz::sim::systems::JointController">
       <joint_name>FrontRightHubMotorWheelJoint</joint_name>
-      <!-- <sub_topic>front_right</sub_topic> -->
       <use_actuator_msg>true</use_actuator_msg>
       <actuator_number>1</actuator_number>
+    </plugin> -->
+    <plugin
+      filename="gz-sim-diff-drive-system"
+      name="gz::sim::systems::DiffDrive">
+      <left_joint>FrontLeftHubMotorWheelJoint</left_joint>
+      <right_joint>FrontRightHubMotorWheelJoint</right_joint>
+      <wheel_separation>0.233</wheel_separation>
+      <wheel_radius>0.03575</wheel_radius>
+      <max_linear_acceleration>2</max_linear_acceleration>
+      <min_linear_acceleration>-2</min_linear_acceleration>
+      <max_angular_acceleration>3</max_angular_acceleration>
+      <min_angular_acceleration>-3</min_angular_acceleration>
+      <max_linear_velocity>0.5</max_linear_velocity>
+      <min_linear_velocity>-0.5</min_linear_velocity>
+      <max_angular_velocity>2.0</max_angular_velocity>
+      <min_angular_velocity>-2.0</min_angular_velocity>
+      <topic>/cmd_vel</topic>
+      <!-- <odom_topic>/odom</odom_topic>
+      <tf_topic>/tf</tf_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_link</child_frame_id>
+      <odom_publish_frequency>30</odom_publish_frequency> -->
     </plugin>
     <plugin
       filename="gz-sim-odometry-publisher-system"
