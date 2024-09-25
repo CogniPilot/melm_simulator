@@ -461,5 +461,21 @@
       <joint_name>FrontRightHubMotorWheelJoint</joint_name>
       <joint_name>FrontLeftHubMotorWheelJoint</joint_name>
     </plugin>
+    <plugin
+      filename="gz-sim-linearbatteryplugin-system"
+      name="gz::sim::systems::LinearBatteryPlugin">
+      <battery_name>linear_battery</battery_name>
+      <voltage>21.9</voltage>
+      <open_circuit_voltage_constant_coef>21.9</open_circuit_voltage_constant_coef>
+      <open_circuit_voltage_linear_coef>-5.0</open_circuit_voltage_linear_coef>
+      <initial_charge>4.8</initial_charge>
+      <capacity>5.0</capacity>
+      <resistance>0.07</resistance>
+      <smooth_current_tau>2.0</smooth_current_tau>
+      <soc_threshold>0.51</soc_threshold>
+      <power_load>48.0</power_load>
+      <fix_issue_225>true</fix_issue_225>
+      <start_draining>true</start_draining>
+    </plugin>
   </model>
 </sdf>
